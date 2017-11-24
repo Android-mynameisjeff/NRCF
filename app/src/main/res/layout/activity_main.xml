@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context="project.community_center.nrcf.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/start">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -27,19 +28,24 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
-        android:text="@string/list" />
+        android:layout_below="@id/start"
+        android:text="@string/list"
+        android:layout_centerInParent="true" />
 
     <Button
+        android:layout_below="@id/b_list"
         android:id="@+id/b_map"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
         android:text="@string/map" />
+
 
     <include layout="@layout/content_main" />
 
 
 
 
-</LinearLayout>
+</RelativeLayout>

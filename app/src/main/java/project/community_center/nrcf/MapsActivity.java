@@ -1,5 +1,6 @@
 package project.community_center.nrcf;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private int clicked = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +99,20 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
 
         // Add some markers to the map, and add a data object to each marker.
         mFraserside_Community_Services = mMap.addMarker(new MarkerOptions().position(Fraserside_Community_Services).title("Fraserside Community Services - Subsidy Programs"));
+      //  mFraserside_Community_Services.showInfoWindow();
         mFraserside_Community_Services.setTag(0);
 
         mCommunity_Schools = mMap.addMarker(new MarkerOptions().position(Community_Schools).title("Community Schools"));
+      //  mCommunity_Schools.showInfoWindow();
         mCommunity_Schools.setTag(0);
 
         mCanada_Games_Pool = mMap.addMarker(new MarkerOptions().position(Canada_Games_Pool).title("Canada Games Pool"));
+      //  mCanada_Games_Pool.showInfoWindow();
         mCanada_Games_Pool.setTag(0);
+
+        mYouth_Centre = mMap.addMarker(new MarkerOptions().position(Youth_Centre).title("New Westminster Youth Centre"));
+       // mYouth_Centre.showInfoWindow();
+        mYouth_Centre.setTag(0);
 
 //        mMap.addMarker(new MarkerOptions().position(Centennial_Community_Centre).title("Centennial Community Centre"));
 //        mMap.addMarker(new MarkerOptions().position(Century_House).title("Century House"));
@@ -129,7 +138,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
 
         // Retrieve the data from the marker.
         Integer clickCount = (Integer) marker.getTag();
-
+/*
         // Check if a click count was set, then display the click count.
         if (clickCount != null) {
             clickCount = clickCount + 1;
@@ -138,6 +147,18 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
                     marker.getTitle() +
                             " has been clicked " + clickCount + " times.",
                     Toast.LENGTH_SHORT).show();
+        }*/
+
+        clicked++;
+        marker.showInfoWindow();
+
+        if(clicked == 2) {
+            clicked = 0;
+            if (marker.getTitle().equals("New Westminster Youth Centre")){
+                Intent intent = new Intent(MapsActivity.this, CenterInformationActivity.class);
+                intent.putExtra("index", 0);
+                startActivity(intent);
+            }
         }
 
         // Return false to indicate that we have not consumed the event and that we wish
