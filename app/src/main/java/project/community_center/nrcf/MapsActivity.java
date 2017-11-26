@@ -17,6 +17,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
 
     private GoogleMap mMap;
     private int clicked = 0;
+    private int markerFlag = -1;
+    private static boolean firstClick = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +69,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         Marker mHume_Park_Outdoor_Pool;
 
         // Add a marker for Park  Moody Park Outdoor Pool
-        LatLng Moody_Park_Outdoor_Pool = new LatLng(49.21131824, -122.9281635);
-        Marker mMoody_Park_Outdoor_Pool;
+        //LatLng Moody_Park_Outdoor_Pool = new LatLng(49.21131824, -122.9281635);
+        //Marker mMoody_Park_Outdoor_Pool;
 
         // Add a marker for Park Moody Park Arena
         LatLng Moody_Park_Arena = new LatLng(49.21556332, -122.9261784);
@@ -98,21 +100,41 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         // .showInfoWindow();
 
         // Add some markers to the map, and add a data object to each marker.
-        mFraserside_Community_Services = mMap.addMarker(new MarkerOptions().position(Fraserside_Community_Services).title("Fraserside Community Services - Subsidy Programs"));
-      //  mFraserside_Community_Services.showInfoWindow();
-        mFraserside_Community_Services.setTag(0);
-
-        mCommunity_Schools = mMap.addMarker(new MarkerOptions().position(Community_Schools).title("Community Schools"));
-      //  mCommunity_Schools.showInfoWindow();
-        mCommunity_Schools.setTag(0);
-
-        mCanada_Games_Pool = mMap.addMarker(new MarkerOptions().position(Canada_Games_Pool).title("Canada Games Pool"));
-      //  mCanada_Games_Pool.showInfoWindow();
-        mCanada_Games_Pool.setTag(0);
-
-        mYouth_Centre = mMap.addMarker(new MarkerOptions().position(Youth_Centre).title("New Westminster Youth Centre"));
-       // mYouth_Centre.showInfoWindow();
+        mYouth_Centre = mMap.addMarker(new MarkerOptions().position(Youth_Centre).
+                title("New Westminster Youth Centre"));
         mYouth_Centre.setTag(0);
+
+      //  mQueensborough_Community_Centre = mMap.addMarker(new MarkerOptions().position(Queensborough_Community_Centre)
+     //           .title("Queensborough Community Centre"));
+     //  mQueensborough_Community_Centre.setTag(1);
+
+       // mQueens_Park_Arena = mMap.addMarker(new MarkerOptions().position(Queens_Park_Arena)
+      //          .title("Queens Park Arena"));
+       // mQueens_Park_Arena.setTag(2);
+
+       mMoody_Park_Arena = mMap.addMarker(new MarkerOptions().position(Moody_Park_Arena)
+               .title("Moody Park Arena"));
+       mMoody_Park_Arena.setTag(3);
+
+        mCentury_House = mMap.addMarker(new MarkerOptions().position(Century_House).
+                title("Century House"));
+        mCentury_House.setTag(4);
+
+      //  mCentennial_Community_Centre = mMap.addMarker(new MarkerOptions().position(Centennial_Community_Centre).
+      //          title("Centennial Community Centre"));
+      //  mCentennial_Community_Centre.setTag(5);
+
+     //  mCanada_Games_Pool = mMap.addMarker(new MarkerOptions().position(Canada_Games_Pool).title("Canada Games Pool"));
+      //  mCanada_Games_Pool.setTag(6);
+
+        //mFraserside_Community_Services = mMap.addMarker(new MarkerOptions().position(Fraserside_Community_Services).
+        //        title("Fraserside Community Services - Subsidy Programs"));
+        //mFraserside_Community_Services.setTag(0);
+
+        //mCommunity_Schools = mMap.addMarker(new MarkerOptions().position(Community_Schools).title("Community Schools"));
+        //mCommunity_Schools.setTag(0);
+
+
 
 //        mMap.addMarker(new MarkerOptions().position(Centennial_Community_Centre).title("Centennial Community Centre"));
 //        mMap.addMarker(new MarkerOptions().position(Century_House).title("Century House"));
@@ -136,29 +158,30 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        // Retrieve the data from the marker.
-        Integer clickCount = (Integer) marker.getTag();
-/*
-        // Check if a click count was set, then display the click count.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
-            Toast.makeText(this,
-                    marker.getTitle() +
-                            " has been clicked " + clickCount + " times.",
-                    Toast.LENGTH_SHORT).show();
-        }*/
-
         clicked++;
+        // Retrieve the data from the marker.
+        //markerFlag = (Integer) marker.getTag();
+        //int flag = (Integer) marker.getTag();
+        if(clicked == 1 && firstClick) {
+            markerFlag = (Integer) marker.getTag();
+            firstClick = false;
+        }
+
+        if(markerFlag !=  (Integer) marker.getTag()) {
+            firstClick = true;
+            markerFlag = (Integer) marker.getTag();
+            clicked = 0;
+        }
+
         marker.showInfoWindow();
 
-        if(clicked == 2) {
+        if(clicked == 2 && (markerFlag ==  (Integer) marker.getTag()) ) {
             clicked = 0;
-            if (marker.getTitle().equals("New Westminster Youth Centre")){
-                Intent intent = new Intent(MapsActivity.this, CenterInformationActivity.class);
-                intent.putExtra("index", 0);
-                startActivity(intent);
-            }
+            firstClick = true;
+
+            Intent intent = new Intent(MapsActivity.this, CenterInformationActivity.class);
+            intent.putExtra("index", (Integer) marker.getTag());
+            startActivity(intent);
         }
 
         // Return false to indicate that we have not consumed the event and that we wish
