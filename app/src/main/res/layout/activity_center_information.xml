@@ -7,9 +7,7 @@
     android:orientation="vertical"
     tools:context="project.community_center.nrcf.CenterInformationActivity">
 
-    //    //String name, String address, String phone, String website,
-    // String activities, String hours, int picture
-    //
+    <include layout="@layout/toolbar_main" android:id="@+id/toolbar" />
 
 
     <ImageView
@@ -34,6 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/phone"
+        android:autoLink="phone"
+        android:clickable="true"
         style="@style/detail"/>
 
     <TextView
