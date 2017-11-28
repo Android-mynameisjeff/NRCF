@@ -55,6 +55,8 @@
             android:label="@string/title_activity_center_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CenterInformationActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchResultsActivity"></activity>
     </application>
 
 </manifest>

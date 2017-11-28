@@ -1,13 +1,9 @@
 package project.community_center.nrcf;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,20 +11,25 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class CenterListActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity {
     private ListView lv = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_center_list);
+        setContentView(R.layout.activity_search_results);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         lv = (ListView) findViewById(R.id.list);
-
+/*
+        Intent intent = getIntent();
+        ArrayList<EventMaster> eventList = (ArrayList<EventMaster>)intent.getSerializableExtra("search");
+ */
         DbHelper helper = new DbHelper(this);
-        final ArrayList<Center> centerList = helper.getCenters();
-        String[] names = null;
+        Intent intent = getIntent();
+        final ArrayList<Center> centerList = (ArrayList<Center>) intent.getSerializableExtra("search");
         ArrayList<String> centerNames = new ArrayList<String>();
 
         for (Center c: centerList) {
@@ -45,14 +46,14 @@ public class CenterListActivity extends AppCompatActivity {
             list.add(values[i]);
         }*/
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(CenterListActivity.this,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SearchResultsActivity.this,
                 android.R.layout.simple_list_item_1, centerNames);
 
         lv.setAdapter(arrayAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(CenterListActivity.this, CenterInformationActivity.class);
+                Intent intent = new Intent(SearchResultsActivity.this, CenterInformationActivity.class);
 
                 //String name = (String) lv.getAdapter().getItem(i);
                 //intent.putExtra("index", (int) l);
@@ -61,5 +62,4 @@ public class CenterListActivity extends AppCompatActivity {
             }
         });
     }
-
 }
