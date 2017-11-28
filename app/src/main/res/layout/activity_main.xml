@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@mipmap/background"
     tools:context="project.community_center.nrcf.MainActivity">
 
     <include layout="@layout/toolbar_main" android:id="@+id/toolbar" />
