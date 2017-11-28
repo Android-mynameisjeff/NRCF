@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context="project.community_center.nrcf.CenterInformationActivity">
 
     <include layout="@layout/toolbar_main" android:id="@+id/toolbar" />
@@ -14,19 +15,49 @@
         android:id="@+id/photo"
         android:layout_width="190dp"
         android:layout_height="190dp"
-        style="@style/detail"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="#FFCE42"
         android:id="@+id/name"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activities"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="50sp"
+        android:layout_marginRight="50sp"
+        android:textSize="18sp"
+        android:textColor="#454545"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="50sp"
+        android:layout_marginRight="50sp"
+        android:id="@+id/hours"
         style="@style/detail"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="50sp"
+        android:layout_marginRight="50sp"
+        android:textSize="20sp"
         android:id="@+id/address"
-        style="@style/detail"/>
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,25 +65,25 @@
         android:id="@+id/phone"
         android:autoLink="phone"
         android:clickable="true"
-        style="@style/detail"/>
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="50sp"
+        android:textSize="20sp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:clickable="true"
         android:id="@+id/website"
-        style="@style/detail"/>
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="50sp"
+        android:textSize="13sp"
+        />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activities"
-        style="@style/detail"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hours"
-        style="@style/detail"/>
+
+
 
 
 </LinearLayout>
