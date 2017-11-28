@@ -359,7 +359,7 @@ String rawQuery = "SELECT * FROM " + RefuelTable.TABLE_NAME + " INNER JOIN " + E
            new Center("New Westminster Youth Centre", "620 Eighth Street V3M 3S2",
                     "604-515-3801", "http://www.newwestpcr.ca/recreation/youth_centre.php",
                     "Drop-in Basketball, Cooking Program, Computer lab, Fitness Facility, Pool Table, Multi-Purpose Room",
-                    "Monday-Thursday, 3:15 pm - 9:00 pm, Friday-Saturday, 3:15pm-11:00pm",
+                    "Monday-Thursday: \n 3:15 pm - 9:00 pm, Friday-Saturday, 3:15pm-11:00pm",
                     R.drawable.youthcentre),
             new Center("Queensborough Community Centre", "920 Ewen Avenue V3M 5C8",
                     "604-527-7388",   "https://www.newwestcity.ca/parks-and-recreation/facilities/queensborough-community-centre",
