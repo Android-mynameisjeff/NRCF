@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(this, SearchActivity.class);
                 startActivity(i);
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

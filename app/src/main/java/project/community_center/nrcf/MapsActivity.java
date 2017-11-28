@@ -1,6 +1,7 @@
 package project.community_center.nrcf;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     private int clicked = 0;
     private int markerFlag = -1;
     private static boolean firstClick = true;
+    DbHelper helper = new DbHelper(this);
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        db = helper.getReadableDatabase();
     }
 
 
@@ -81,15 +87,15 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
 
         mQueensborough_Community_Centre = mMap.addMarker(new MarkerOptions().position(Queensborough_Community_Centre)
                 .title("Queensborough Community Centre"));
-       mQueensborough_Community_Centre.setTag(1);
+        mQueensborough_Community_Centre.setTag(1);
 
         mQueens_Park_Arena = mMap.addMarker(new MarkerOptions().position(Queens_Park_Arena)
                 .title("Queens Park Arena"));
         mQueens_Park_Arena.setTag(2);
 
-       mMoody_Park_Arena = mMap.addMarker(new MarkerOptions().position(Moody_Park_Arena)
+        mMoody_Park_Arena = mMap.addMarker(new MarkerOptions().position(Moody_Park_Arena)
                .title("Moody Park Arena"));
-       mMoody_Park_Arena.setTag(3);
+        mMoody_Park_Arena.setTag(3);
 
         mCentury_House = mMap.addMarker(new MarkerOptions().position(Century_House).
                 title("Century House"));
@@ -99,7 +105,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
                 title("Centennial Community Centre"));
         mCentennial_Community_Centre.setTag(5);
 
-       mCanada_Games_Pool = mMap.addMarker(new MarkerOptions().position(Canada_Games_Pool).title("Canada Games Pool"));
+        mCanada_Games_Pool = mMap.addMarker(new MarkerOptions().position(Canada_Games_Pool).
+               title("Canada Games Pool"));
         mCanada_Games_Pool.setTag(6);
 
 //        mMap.addMarker(new MarkerOptions().position(Centennial_Community_Centre).title("Centennial Community Centre"));
@@ -143,8 +150,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
             clicked = 0;
             firstClick = true;
 
+            Center center = helper.getCenter(marker.getTitle());
             Intent intent = new Intent(MapsActivity.this, CenterInformationActivity.class);
-            intent.putExtra("index", (Integer) marker.getTag());
+            intent.putExtra("center", center);
             startActivity(intent);
         }
 

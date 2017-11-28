@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class CenterListActivity extends AppCompatActivity {
     private ListView lv = null;
+    final DbHelper helper = new DbHelper(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +27,6 @@ public class CenterListActivity extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.list);
 
-        DbHelper helper = new DbHelper(this);
         final ArrayList<Center> centerList = helper.getCenters();
         String[] names = null;
         ArrayList<String> centerNames = new ArrayList<String>();
@@ -54,9 +54,10 @@ public class CenterListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(CenterListActivity.this, CenterInformationActivity.class);
 
-                //String name = (String) lv.getAdapter().getItem(i);
+                String name = (String) lv.getAdapter().getItem(i);
                 //intent.putExtra("index", (int) l);
-                intent.putExtra("center", centerList.get((int) l));
+                intent.putExtra("center", helper.getCenter(name));
+                //intent.putExtra("center", centerList.get((int) l));
                 startActivity(intent);
             }
         });
