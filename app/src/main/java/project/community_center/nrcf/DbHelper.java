@@ -150,15 +150,15 @@ public class DbHelper extends SQLiteOpenHelper {
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
-        } else if (center.getName().equalsIgnoreCase("Centennial Community Centre")) {
-            for (String string: centennialAct) {
+        } else if (center.getName().equalsIgnoreCase("Canada Games Pool")) {
+            for (String string: canadaAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
-        } else if (center.getName().equalsIgnoreCase("Canada Pools Games")) {
-            for (String string: canadaAct) {
+        } else if (center.getName().equalsIgnoreCase("Centennial Community Centre")) {
+            for (String string: centennialAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
@@ -204,9 +204,25 @@ public class DbHelper extends SQLiteOpenHelper {
     }
      */
 
-    public Center getCenter() {
+    public Center getCenter(String name) {
         Center center = null;
-
+        String selectQuery = "SELECT * FROM Centre WHERE Name = '" + name + "'";
+        Cursor cursor = getReadableDatabase().rawQuery(selectQuery, null);
+        if(cursor.moveToFirst()) {
+            do {
+                Center c = new Center(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7)
+                );
+                center = c;
+            } while (cursor.moveToNext());
+        }
         return center;
     }
 
@@ -387,7 +403,7 @@ String rawQuery = "SELECT * FROM " + RefuelTable.TABLE_NAME + " INNER JOIN " + E
                             "Indoor Cycling, Childminding, Music",
                     "Monday-Thursday 9:00 am - 8:30 pm, Friday 9:00 am - 8:00 pm, Weekends 8:30 am - 1:00 pm",
                     R.drawable.centennial),
-            new Center("Canada Pools Games", "65 East Sixth V3l 4G6",
+            new Center("Canada Games Pool", "65 East Sixth V3l 4G6",
                     "604-526-4281", "https://www.newwestcity.ca/parks-and-recreation/facilities/canada-games-pool",
                     "Swimming, Diving, Fitness, Aquafit, Green Thunder Waterslide",
                     "Weekdays 5:30 am - 9:30 pm, Saturday 8:00 am - 8:00 pm, Sunday 8:00 am - 9:30 pm",

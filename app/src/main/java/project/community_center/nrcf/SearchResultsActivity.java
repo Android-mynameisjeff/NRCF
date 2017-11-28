@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class SearchResultsActivity extends AppCompatActivity {
     private ListView lv = null;
+    final private DbHelper helper = new DbHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ArrayList<EventMaster> eventList = (ArrayList<EventMaster>)intent.getSerializableExtra("search");
  */
-        DbHelper helper = new DbHelper(this);
         Intent intent = getIntent();
         final ArrayList<Center> centerList = (ArrayList<Center>) intent.getSerializableExtra("search");
         ArrayList<String> centerNames = new ArrayList<String>();
@@ -55,9 +55,11 @@ public class SearchResultsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SearchResultsActivity.this, CenterInformationActivity.class);
 
-                //String name = (String) lv.getAdapter().getItem(i);
+                String name = (String) lv.getAdapter().getItem(i);
                 //intent.putExtra("index", (int) l);
-                intent.putExtra("center", centerList.get((int) l));
+                //intent.putExtra("center", centerList.get((int) l));
+                intent.putExtra("center", helper.getCenter(name));
+
                 startActivity(intent);
             }
         });
