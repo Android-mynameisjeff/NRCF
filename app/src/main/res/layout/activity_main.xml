@@ -5,7 +5,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context="project.community_center.nrcf.MainActivity">
+
     <include layout="@layout/toolbar_main" android:id="@+id/toolbar" />
 
 
@@ -17,7 +19,9 @@
         android:layout_marginTop="100dp"
         android:layout_below="@id/toolbar"
         android:text="@string/list"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+
+        />
 
     <Button
         android:layout_below="@id/b_list"

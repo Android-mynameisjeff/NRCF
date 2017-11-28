@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +18,14 @@ public class MainActivity extends AppCompatActivity {
 
     Button map;
     Button list;
+    private ShareActionProvider shareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar.setTitle("Welcome");
         setSupportActionBar(toolbar);
 
         map = (Button) findViewById(R.id.b_map);
@@ -49,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu. This adds items to the app bar.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        setShareActionIntent("Share");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -66,5 +74,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setShareActionIntent(String text) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_TEXT, text);
+        shareActionProvider.setShareIntent(i);
+    }
 
 }
