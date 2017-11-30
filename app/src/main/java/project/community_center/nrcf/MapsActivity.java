@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -109,16 +108,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
                title("Canada Games Pool"));
         mCanada_Games_Pool.setTag(6);
 
-//        mMap.addMarker(new MarkerOptions().position(Centennial_Community_Centre).title("Centennial Community Centre"));
-//        mMap.addMarker(new MarkerOptions().position(Century_House).title("Century House"));
-//        mMap.addMarker(new MarkerOptions().position(Hume_Park_Outdoor_Pool).title("Hume Park Outdoor Pool"));
-//        mMap.addMarker(new MarkerOptions().position(Moody_Park_Outdoor_Pool).title("Moody Park Outdoor Pool"));
-//        mMap.addMarker(new MarkerOptions().position(Moody_Park_Arena).title("Moody Park Arena"));
-//        mMap.addMarker(new MarkerOptions().position(Museum_and_Archives).title("Museum and Archives"));
-//        mMap.addMarker(new MarkerOptions().position(Queens_Park_Arena).title("Queens Park Arena"));
-//        mMap.addMarker(new MarkerOptions().position(Queens_Park_Arenex).title("Community Schools"));
-//        mMap.addMarker(new MarkerOptions().position(Queensborough_Community_Centre).title("Queensborough Community Centre"));
-//        mMap.addMarker(new MarkerOptions().position(Youth_Centre).title("Youth Centre"));
+
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Century_House));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);

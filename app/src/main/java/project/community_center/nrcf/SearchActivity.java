@@ -12,9 +12,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * returns an activity with a list of all
+ * centres that offer the program that the user searches for
+ * If user searches for fitness, this activity will display
+ * all centres that offer fitness.
+ */
 public class SearchActivity extends AppCompatActivity {
-    private SQLiteDatabase db;
     private DbHelper helper;
+    private SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

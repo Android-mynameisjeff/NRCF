@@ -30,7 +30,9 @@ public class DbHelper extends SQLiteOpenHelper {
         updateMyDatabase(sqLiteDatabase, i, i1);
     }
 
-
+    /**
+     * Update the database with community centre data
+     */
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             db.execSQL(getCenterTableSql());
@@ -42,18 +44,9 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-
-    private String getEventTableSql() {
-        String sql = "";
-        sql += "CREATE TABLE Events (";
-        sql += "_eventId INTEGER PRIMARY KEY, ";
-        sql += "NAME TEXT, ";
-        sql += "DATE TEXT, ";
-        sql += "TIME TEXT);";
-
-        return sql;
-    }
-
+    /**
+     * Create Centre table
+     */
     private String getCenterTableSql() {
         String sql = "";
         sql += "CREATE TABLE Centre (";
@@ -69,39 +62,24 @@ public class DbHelper extends SQLiteOpenHelper {
         return sql;
     }
 
+    /**
+     * Create Activity table.
+     * Uses Centre's primary key as a foreign key
+     */
     private String getActivityTableSql() {
         String sql = "";
         sql += "CREATE TABLE Activity (";
         sql += "_activityId INTEGER PRIMARY KEY, ";
         sql += "NAME TEXT, ";
         sql += "_centreId INTEGER, ";
-        //sql += "FOREIGN KEY (_centreId REFERENCES Centre (_centreId));";
         sql += "FOREIGN KEY (_centreId) REFERENCES Centre (_centreId));";
         return sql;
     }
 
-    private String getDetailTableSql() {
-        String sql ="";
-        sql += "CREATE TABLE Details (";
-        sql += "_detailId INTEGER PRIMARY KEY, ";
-        sql += "ItemName TEXT, ";
-        sql += "ItemUnit TEXT, ";
-        sql += "ItemQuantity INTEGER, ";
-        sql += "_eventId INTEGER, ";
-        sql += "FOREIGN KEY (_eventId) REFERENCES Events (_eventId));";
-
-        return sql;
-    }
-/*
-        sql += "_centreId INTEGER PRIMARY KEY, ";
-        sql += "NAME TEXT, ";
-        sql += "ADDRESS TEXT, ";
-        sql += "PHONE TEXT, ";
-        sql += "WEBSITE TEXT, ";
-        sql += "ACTIVITIES TEXT, ";
-        sql += "HOURS TEXT, ";
-        sql += "PICTURE INTEGER);";
- */
+    /**
+     * Seed the data.
+     * Each centre is updated with their activities
+     */
     public void populateDB (SQLiteDatabase db, Center center) {
         ContentValues centerValues = new ContentValues();
         centerValues.put("Name", center.getName());
@@ -116,94 +94,60 @@ public class DbHelper extends SQLiteOpenHelper {
 
         ContentValues actValues = null;
         if (center.getName().equalsIgnoreCase("New Westminster Youth Centre")) {
-            for (String string: newWestAct) {
+            for (String string : newWestAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
         } else if (center.getName().equalsIgnoreCase("Queensborough Community Centre")) {
-            for (String string: queensCommAct) {
+            for (String string : queensCommAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
         } else if (center.getName().equalsIgnoreCase("Queens Park Arena")) {
-            for (String string: queensParkAct) {
+            for (String string : queensParkAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
         } else if (center.getName().equalsIgnoreCase("Moody Park Arena")) {
-            for (String string: moodyAct) {
+            for (String string : moodyAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
         } else if (center.getName().equalsIgnoreCase("Century House")) {
-            for (String string: centuryAct) {
+            for (String string : centuryAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
         } else if (center.getName().equalsIgnoreCase("Canada Games Pool")) {
-            for (String string: canadaAct) {
+            for (String string : canadaAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
         } else if (center.getName().equalsIgnoreCase("Centennial Community Centre")) {
-            for (String string: centennialAct) {
+            for (String string : centennialAct) {
                 actValues = new ContentValues();
                 actValues.put("Name", string);
                 actValues.put("_centreId", id);
                 db.insert("Activity", null, actValues);
             }
         }
-
-        /*
-        ContentValues eventValues = new ContentValues();
-        eventValues.put("Name", event.getName());
-        eventValues.put("Date", event.getDate());
-        eventValues.put("Time", event.getTime());
-        int id = (int) db.insert("Events", null, eventValues);
-
-        for(EventItem item : items) {
-            ContentValues itemValues = new ContentValues();
-            itemValues.put("ItemName", item.getName());
-            itemValues.put("ItemUnit", item.getUnit());
-            itemValues.put("ItemQuantity", item.getQuantity());
-            itemValues.put("_eventId", id);
-            db.insert("Details", null, itemValues);
-        }*/
     }
 
-    /*
-    public ArrayList<EventMaster> getEvents() {
-        ArrayList<EventMaster> events = new ArrayList<EventMaster>();
-            String selectQuery = "SELECT * FROM Events";
-            Cursor cursor = getReadableDatabase().rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    EventMaster e = new EventMaster(
-                            cursor.getInt(0),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getString(3));
-                    events.add(e);
-                } while (cursor.moveToNext());
-            }
-
-        return events;
-    }
+    /**
+     * retrieves data from database and returns one center
      */
-
     public Center getCenter(String name) {
         Center center = null;
         String selectQuery = "SELECT * FROM Centre WHERE Name = '" + name + "'";
@@ -226,6 +170,9 @@ public class DbHelper extends SQLiteOpenHelper {
         return center;
     }
 
+    /**
+     * retrieves from database and returns a list of centers
+     */
     public ArrayList<Center> getCenters() {
         ArrayList<Center> centers = new ArrayList<Center>();
         String selectQuery = "SELECT * FROM Centre";
@@ -249,11 +196,13 @@ public class DbHelper extends SQLiteOpenHelper {
 
         return centers;
     }
-/*
-String rawQuery = "SELECT * FROM " + RefuelTable.TABLE_NAME + " INNER JOIN " + ExpenseTable.TABLE_NAME
-        + " ON " + RefuelTable.EXP_ID + " = " + ExpenseTable.ID
-        + " WHERE " + RefuelTable.ID + " = " +  id;
- */
+
+    /**
+     * retrieves a list of centers that has
+     * the activity the user is looking for
+     * eg. if the user searches for fitness as an activity,
+     * this will return all centres that offer fitness
+     */
     public ArrayList<Center> getSearch(String name) {
         ArrayList<Center> searchList = new ArrayList<Center>();
         String selectQuery = "SELECT * FROM Centre INNER JOIN Activity ON" +
@@ -278,99 +227,10 @@ String rawQuery = "SELECT * FROM " + RefuelTable.TABLE_NAME + " INNER JOIN " + E
         }
         return searchList;
     }
-/*
-    public ArrayList<EventMaster> getSearch(String name) {
-        ArrayList<EventMaster> searchList = new ArrayList<EventMaster>();
-        String selectQuery = "SELECT * FROM Events WHERE Name LIKE '%" + name + "%'";
-        Cursor cursor = getReadableDatabase().rawQuery(selectQuery, null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                EventMaster e = new EventMaster(
-                        cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3));
-                searchList.add(e);
-            } while (cursor.moveToNext());
-        }
-
-        return searchList;
-    }
-
-    public EventMaster getEvent(int eventId) {
-        EventMaster event = null;
-        String selectQuery = "SELECT Name, Date, Time FROM Events " +
-                "WHERE _eventId = " + eventId;
-        Cursor cursor = getReadableDatabase().rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                event = new EventMaster(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2));
-            } while (cursor.moveToNext());
-        }
-        return event;
-    }
-
-    public ArrayList<EventMaster> getEvents() {
-        ArrayList<EventMaster> events = new ArrayList<EventMaster>();
-            String selectQuery = "SELECT * FROM Events";
-            Cursor cursor = getReadableDatabase().rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    EventMaster e = new EventMaster(
-                            cursor.getInt(0),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getString(3));
-                    events.add(e);
-                } while (cursor.moveToNext());
-            }
-
-        return events;
-    }
-
-    public EventItem getItem(int detailId) {
-        EventItem item = null;
-        String selectQuery = "SELECT ItemName, ItemUnit, ItemQuantity FROM Details " +
-                "WHERE _detailId = " + detailId;
-        Cursor cursor = getReadableDatabase().rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                item = new EventItem(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getInt(2));
-            } while (cursor.moveToNext());
-        }
-        return item;
-    }
-
-    public ArrayList<EventItem> getItems(int eventId) {
-        ArrayList<EventItem> items = new ArrayList<EventItem>();
-            String selectQuery = "SELECT _detailId, ItemName, ItemUnit, ItemQuantity FROM Details " +
-                    "WHERE _eventId = " + eventId;
-            Cursor cursor = getReadableDatabase().rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    EventItem item = new EventItem(
-                            cursor.getInt(0),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getInt(3),
-                            eventId);
-                    items.add(item);
-                } while (cursor.moveToNext());
-            }
-        return items;
-    }*/
-
+    /**
+     * The community centres and their data
+     */
     public static final Center[] list = {
            new Center("New Westminster Youth Centre", "620 Eighth Street V3M 3S2",
                     "604-515-3801", "http://www.newwestpcr.ca/recreation/youth_centre.php",
@@ -410,6 +270,9 @@ String rawQuery = "SELECT * FROM " + RefuelTable.TABLE_NAME + " INNER JOIN " + E
                     R.drawable.canadagames)
     };
 
+    /**
+     * activities of their respective centres
+     */
     private static final String[] newWestAct = {
             "basketball", "cooking", "computer", "fitness", "pool table", "multi-purpose room"
     };
