@@ -11,6 +11,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+/**
+ * activity that displays all centres
+ * that offer a specific program.
+ * this uses the arraylist that SearchActivity received
+ */
 public class SearchResultsActivity extends AppCompatActivity {
     private ListView lv = null;
     final private DbHelper helper = new DbHelper(this);
@@ -24,10 +29,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         lv = (ListView) findViewById(R.id.list);
-/*
-        Intent intent = getIntent();
-        ArrayList<EventMaster> eventList = (ArrayList<EventMaster>)intent.getSerializableExtra("search");
- */
+
         Intent intent = getIntent();
         final ArrayList<Center> centerList = (ArrayList<Center>) intent.getSerializableExtra("search");
         ArrayList<String> centerNames = new ArrayList<String>();
@@ -35,16 +37,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         for (Center c: centerList) {
             centerNames.add(c.getName());
         }
-        /*for (int i = 0; i < centerList.size(); ++i) {
-            names[i] = centerList.get(i).getName();
-        }*/
-        //String[] values = Center.nameslist;
-        //String[] values = helper.getNames();
-
-        /*final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }*/
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SearchResultsActivity.this,
                 android.R.layout.simple_list_item_1, centerNames);
@@ -56,8 +48,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                 Intent intent = new Intent(SearchResultsActivity.this, CenterInformationActivity.class);
 
                 String name = (String) lv.getAdapter().getItem(i);
-                //intent.putExtra("index", (int) l);
-                //intent.putExtra("center", centerList.get((int) l));
                 intent.putExtra("center", helper.getCenter(name));
 
                 startActivity(intent);

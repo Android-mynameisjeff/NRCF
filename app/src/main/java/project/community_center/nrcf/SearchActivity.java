@@ -12,9 +12,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * User can search for centres that offer an activity.
+ * This retrieves an ArrayList to send to SearchResultsActivity.
+ */
 public class SearchActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private DbHelper helper;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

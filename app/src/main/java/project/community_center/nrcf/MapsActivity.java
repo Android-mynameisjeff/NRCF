@@ -14,14 +14,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * Google Maps
+ */
 public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private int clicked = 0;
     private int markerFlag = -1;
     private static boolean firstClick = true;
-    DbHelper helper = new DbHelper(this);
-    SQLiteDatabase db;
+    private DbHelper helper = new DbHelper(this);
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,17 +112,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
                title("Canada Games Pool"));
         mCanada_Games_Pool.setTag(6);
 
-//        mMap.addMarker(new MarkerOptions().position(Centennial_Community_Centre).title("Centennial Community Centre"));
-//        mMap.addMarker(new MarkerOptions().position(Century_House).title("Century House"));
-//        mMap.addMarker(new MarkerOptions().position(Hume_Park_Outdoor_Pool).title("Hume Park Outdoor Pool"));
-//        mMap.addMarker(new MarkerOptions().position(Moody_Park_Outdoor_Pool).title("Moody Park Outdoor Pool"));
-//        mMap.addMarker(new MarkerOptions().position(Moody_Park_Arena).title("Moody Park Arena"));
-//        mMap.addMarker(new MarkerOptions().position(Museum_and_Archives).title("Museum and Archives"));
-//        mMap.addMarker(new MarkerOptions().position(Queens_Park_Arena).title("Queens Park Arena"));
-//        mMap.addMarker(new MarkerOptions().position(Queens_Park_Arenex).title("Community Schools"));
-//        mMap.addMarker(new MarkerOptions().position(Queensborough_Community_Centre).title("Queensborough Community Centre"));
-//        mMap.addMarker(new MarkerOptions().position(Youth_Centre).title("Youth Centre"));
-
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Century_House));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
 
@@ -127,17 +119,24 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         mMap.setOnMarkerClickListener(this);
     }
 
-    /** Called when the user clicks a marker. */
+    /**
+     * Called when the user clicks a marker.
+     * Users must double click on a marker to show its information
+     * The first click will show the name of the centre only
+     * */
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
         clicked++;
 
+        //user clicked on a marker for the first time
         if(clicked == 1 && firstClick) {
             markerFlag = (Integer) marker.getTag();
             firstClick = false;
         }
 
+        //user clicked a marker that they didn't click before
+        //resets firstClick and marker is set to the new click
         if(markerFlag !=  (Integer) marker.getTag()) {
             firstClick = true;
             markerFlag = (Integer) marker.getTag();

@@ -13,14 +13,9 @@ public class CenterInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center_information);
-        //    //String name, String address, String phone, String website,
-        // String activities, String hours, int picture
-        //(ClassName) getIntent().getSerializableExtra("Editing");
+
         Intent intent = getIntent();
         Center center = (Center) getIntent().getSerializableExtra("center");
-        //int centerIndex = (Integer) getIntent().getExtras().get("index");
-        //String str = intent.getStringExtra("num");
-        //Center center = Center.list[centerIndex];
 
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(center.getName());
